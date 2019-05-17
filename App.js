@@ -8,7 +8,7 @@ class App extends React.Component {
   }
 
   handlePress = () => {
-    Animated.parallel([
+    Animated.sequence([
       Animated.timing(this.state.colorAnimation, {
         toValue: 1,
         duration: 500
@@ -35,7 +35,7 @@ class App extends React.Component {
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={this.handlePress}>
         <Animated.View style={[styles.box, boxStyle]}>
-          <Text>Hello Parallel</Text>
+          <Text style={{fontSize: 15}}>Hello Parallel</Text>
         </Animated.View>
       </TouchableWithoutFeedback>
     </View>
@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
     box: {
       height: 80,
       width: 80,
+      justifyContent: 'center',
+      alignItems: 'center',
       backgroundColor: 'tomato'
     }
 })
