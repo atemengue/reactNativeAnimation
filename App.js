@@ -6,23 +6,25 @@ class App extends React.Component {
     animation: new Animated.Value(0)
   }
   startAnimation = () => {
-    Animated.timing(this.state.animation, {
-      toValue: 50,
-      duration: 1500
-    }).start(() => {
+    Animated.parallel([
       Animated.timing(this.state.animation, {
-        toValue: 0,
-        duration: 200
-      }).start();
-    })
+        toValue: 12,
+        duration: 3500
+      })
+    ]).start()
   }
   render() {
-    const randomValue = new Animated.Value(6)
-    const newAnimation = Animated.multiply(
+    const randomValue = new Animated.Value(3);
+    const newAnimation = Animated.modulo(
       this.state.animation, randomValue
     )
+
+    const interpolated = newAnimation.interpolate({
+      inputRange: [0, 3],
+      outputRange: ['0deg', '270deg']
+    })
     const animationOne = {
-      transform: [{ translateY: newAnimation }]
+      transform: [{ rotate: interpolated }]
     }
 
     return(
