@@ -8,18 +8,16 @@ class App extends React.Component {
   }
 
   handlePress = () => {
-    Animated.sequence([
+    Animated.stagger(200,[
       Animated.timing(this.state.colorAnimation, {
         toValue: 1,
         duration: 500
       }),
       Animated.timing(this.state.scaleAnimation,{
         toValue: 2, 
-        duration: 500
-      }).start()
-    ]).start(() => {
-      alert("Animation Complete")
-    })
+        duration: 300
+      })
+    ]).start()
 
   }
   render() {
