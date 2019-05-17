@@ -1,39 +1,45 @@
 import React from 'react';
-import { View, StyleSheet, Animated, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, Animated, TouchableWithoutFeedback, Text } from 'react-native';
 
 class App extends React.Component {
   state = {
-    animation: new Animated.Value(0)
+    colorAnimation: new Animated.Value(0),
+    scaleAnimation: new Animated.Value(1)
   }
-  startAnimation = () => {
+
+  handlePress = () => {
     Animated.parallel([
-      Animated.timing(this.state.animation, {
-        toValue: 12,
-        duration: 3500
-      })
-    ]).start()
+      Animated.timing(this.state.colorAnimation, {
+        toValue: 1,
+        duration: 500
+      }),
+      Animated.timing(this.state.scaleAnimation,{
+        toValue: 2, 
+        duration: 500
+      }).start()
+    ]).start(() => {
+      alert("Animation Complete")
+    })
+
   }
   render() {
-    const randomValue = new Animated.Value(3);
-    const newAnimation = Animated.modulo(
-      this.state.animation, randomValue
-    )
-
-    const interpolated = newAnimation.interpolate({
-      inputRange: [0, 3],
-      outputRange: ['0deg', '270deg']
+    const backgroundColorInterpolate = this.state.colorAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgb(255, 99, 77)", "rgb(99, 71, 255)"]
     })
-    const animationOne = {
-      transform: [{ rotate: interpolated }]
+    boxStyle = {
+      backgroundColor: backgroundColorInterpolate,
+      transform: [{ scale: this.state.scaleAnimation }]
     }
-
-    return(
-      <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={this.startAnimation}>
-          <Animated.View style={[styles.box, animationOne]} />
-        </TouchableWithoutFeedback>
-      </View>
-    )
+   return(
+    <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={this.handlePress}>
+        <Animated.View style={[styles.box, boxStyle]}>
+          <Text>Hello Parallel</Text>
+        </Animated.View>
+      </TouchableWithoutFeedback>
+    </View>
+  )
   }
 }
 
