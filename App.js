@@ -7,18 +7,18 @@ class App extends React.Component {
   }
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-      toValue: 300,
+      toValue: 50,
       duration: 1500
     }).start(() => {
       Animated.timing(this.state.animation, {
         toValue: 0,
-        duration: 500
+        duration: 200
       }).start();
     })
   }
   render() {
-    const randomValue = new Animated.Value(2)
-    const newAnimation = Animated.divide(
+    const randomValue = new Animated.Value(6)
+    const newAnimation = Animated.multiply(
       this.state.animation, randomValue
     )
     const animationOne = {
